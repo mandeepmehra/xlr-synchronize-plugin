@@ -1,0 +1,137 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<synthetic xsi:schemaLocation="http://www.xebialabs.com/deployit/synthetic synthetic.xsd" xmlns="http://www.xebialabs.com/deployit/synthetic" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+    <type type="synchronize.SynchronizeDeployments" extends="xlrelease.PythonScript" >
+        <property name="xlrServer"
+                  label="XL Release Server"
+                  kind="ci"
+                  referenced-type="xlr.Server"
+                  category="input" />
+        <property name="masterTargetPhase"
+                  label="Master Release Target Phase to add Deployments" 
+                  category="input" />
+        <property name="subTargetPhase" 
+                  label="Sub Release Target Phase to add Deployments" 
+                  category="input" />
+        <property name="releaseID"
+                  kind="string"
+                  label="Release ID"
+                  category="input" />
+
+        <property name="masterChangeValidationPhase" 
+                  label="Master Release Change Validation Phase" 
+                  category="input" 
+                  default="Change Validation" 
+                  hidden="true" />
+        <property name="masterGoNoGoTask"  
+                  label="Notify Go/No-Go Task Name" 
+                  category="input"  
+                  default="Notify Go/No-Go to SubReleases" 
+                  hidden="true" />                  
+
+        <property name="output" category="output" />
+    </type>
+
+     <type type="synchronize.SynchronizeChangePlan" extends="xlrelease.PythonScript">
+        <property name="xlrServer" 
+                  label="XL Release Server" 
+                  kind="ci" 
+                  referenced-type="xlr.Server" 
+                  category="input" />
+        <property name="releaseID" 
+                  label="ReleaseId" 
+                  category="input" 
+                  required="true"/>
+        <property name="subTargetPhase" 
+                  label="Sub Release Phase" 
+                  category="input" 
+                  default="Production"/>                  
+        <property name="releaseStepsVar" 
+                  label="ReleaseSteps Map variable name in Master" 
+                  description="Name of the release steps variable in Master Release (must be key-value type)" 
+                  category="input" 
+                  required="true"  
+                  default="ReleaseSteps"/>
+     </type>
+
+     <type type="synchronize.SynchronizeStatus" extends="xlrelease.PythonScript">
+        <property name="xlrServer" 
+                  label="XL Release Server" 
+                  kind="ci" 
+                  referenced-type="xlr.Server" 
+                  category="input" />
+        <property name="releaseID" 
+                  label="ReleaseId" 
+                  category="input" 
+                  required="true"/>
+        <property name="deploymentStatusVar" 
+                  label="Deployment Status Variable Name" 
+                  description="Name of the deployment status variable in Master Release (must be  key-value type)" 
+                  category="input" 
+                  required="true"  
+                  default="DeploymentStatus"/>
+        <property name="status" 
+                  label="Deployment Confirmed ?" 
+                  category="input" 
+                  required="true" 
+                  kind="boolean" />
+     </type>
+
+
+     <type type="synchronize.SynchronizeChangeValidation" extends="xlrelease.PythonScript">
+        <property name="xlrServer" 
+                  label="XL Release Server" 
+                  kind="ci" 
+                  referenced-type="xlr.Server" 
+                  category="input" />
+        <property name="releaseID" 
+                  label="ReleaseId" 
+                  category="input" 
+                  required="true"/>
+        <property name="masterChangeValidationPhase" 
+                  label="Master Release Change Validation Phase" 
+                  category="input" 
+                  default="Change Validation" />
+        <property name="masterGoNoGoTask"  
+                  label="Notify Go/No-Go Task Name" 
+                  category="input"  
+                  default="Notify Go/No-Go to SubReleases" />
+        <property name="subReleasesVar" 
+                  label="SubReleases Map variable name in Master" 
+                  description="Name of the SubReleases variable in Master Release (must be key-value type)" 
+                  category="input" 
+                  required="true"  
+                  default="SubReleases"/>
+        <property name="goNoGoVar" 
+                  label="Go/No-Go Map variable name in Master" 
+                  description="Name of the Go/No-Go variable in Master Release (must be key-value type)" 
+                  category="input" 
+                  required="true"  
+                  default="Go/No-Go Decision for SubReleases"/>
+        <property name="goNoGoTaskID" 
+                  label="Go/No-Go Task ID" 
+                  category="output" />
+     </type>
+
+
+   <type type="synchronize.NotifySubReleaseGoNo-goDecison" extends="xlrelease.PythonScript">
+       <property name="xlrServer" 
+                 label="XL Release Server" 
+                 kind="ci" 
+                 referenced-type="xlr.Server" 
+                 category="input" />
+       <property name="subreleasesmap" 
+                 label="Sub Releases list" 
+                 kind="map_string_string" 
+                 category="input" />
+       <property name="decisionmap" 
+                 label="Go/No-Go Decision list" 
+                 kind="map_string_string" 
+                 category="input" />
+   </type>
+
+    <!--
+    <type type="xlr.Server" extends="configuration.HttpConnection" />
+    -->
+
+</synthetic>

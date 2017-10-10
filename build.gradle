@@ -1,0 +1,30 @@
+
+plugins {
+    id "com.xebialabs.xlr.docker" version "1.1.12"
+}
+
+apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin: 'eclipse'
+apply plugin: 'maven'
+
+xlrDocker {
+    version = 'v6.1.0.1'
+    download("es_xlr_plugins") {
+        src(["https://github.com/xebialabs-external/es-xlr-synchronize-plugin/releases/download/1.1.0/es-xlr-synchronize-plugin-1.1.0.jar"])
+        dest file("src/downloads/plugins/es-xlr-synchronize-plugin-1.1.0.jar")
+        acceptAnyCertificate true
+    }
+}
+
+group = 'com.xebialabs.deployit.community'
+sourceCompatibility = 1.7
+targetCompatibility = 1.7
+version = '1.1.0'
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
+
+
